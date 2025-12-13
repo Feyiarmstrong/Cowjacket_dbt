@@ -1,0 +1,97 @@
+version: 2
+
+models:
+  - name: dim_customers
+    description: Dimension table for customers
+    columns:
+      - name: customer_id
+        description: Primary key for customers
+        tests:
+          - not_null
+          - unique
+      - name: full_name
+        description: Customer full name
+        tests:
+          - not_null
+      - name: email
+        description: Customer email
+        tests:
+          - not_null
+          - unique
+      - name: join_date
+        description: Date the customer joined
+        tests:
+          - not_null
+      - name: total_loyalty_points
+        description: Total loyalty points for the customer
+        tests: []
+      - name: last_transaction_date
+        description: Date of last loyalty transaction
+        tests: []
+
+  - name: fact_orders
+    description: Fact table containing all orders at line-item level
+    columns:
+      - name: order_id
+        description: Order ID (repeats per product)
+        tests:
+          - not_null
+      - name: customer_id
+        description: Foreign key to dim_customers
+        tests:
+          - not_null
+          - relationships:
+              to: ref('dim_customers')
+              field: customer_id
+      - name: full_name
+        description: Customer full name
+        tests:
+          - not_null
+      - name: email
+        description: Customer email
+        tests:
+          - not_null
+      - name: product_id
+        description: Product ID in the order
+        tests:
+          - not_null
+      - name: quantity
+        description: Quantity of the product in the order
+        tests:
+          - not_null
+      - name: line_total
+        description: Total amount for this line
+        tests:
+          - not_null
+      - name: order_date
+        description: Date the order was placed
+        tests:
+          - not_null
+
+  - name: fact_product_sales
+    description: Fact table of product-level sales (aggregated)
+    columns:
+      - name: product_id
+        description: Primary key for this fact table
+        tests:
+          - not_null
+          - unique
+          - relationships:
+              to: ref('stg_products')
+              field: product_id
+      - name: product_name
+        description: Name of the product
+        tests:
+          - not_null
+      - name: category
+        description: Product category
+        tests:
+          - not_null
+      - name: total_quantity_sold
+        description: Total quantity of the product sold
+        tests:
+          - not_null
+      - name: total_revenue
+        description: Total revenue from the product
+        tests:
+          - not_null
