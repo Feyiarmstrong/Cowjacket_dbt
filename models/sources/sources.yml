@@ -1,8 +1,9 @@
 version: 2
 
 sources:
-  - name: cowjacket_raw       #chosen source name
-    schema: dbt_dev           #Databricks schema
+  - name: cowjacket_raw
+    catalog: workspace
+    schema: "{{ var('target_schema')[target.name] }}"
     tables:
       - name: customers
         description: "Raw customer data from SQL module"
