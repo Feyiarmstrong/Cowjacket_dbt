@@ -1,0 +1,16 @@
+version: 2
+
+sources:
+  - name: cowjacket_raw       #chosen source name
+    schema: dbt_dev           #Databricks schema
+    tables:
+      - name: customers
+        description: "Raw customer data from SQL module"
+      - name: loyality_points
+        description: "Raw loyalty points data from SQL module"
+      - name: order_items
+        description: "Raw order items data from SQL module"
+      - name: orders
+        description: "Raw orders data from SQL module"
+      - name: products
+        description: "Raw products data from SQL module"
