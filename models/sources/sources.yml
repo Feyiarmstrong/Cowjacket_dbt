@@ -3,11 +3,11 @@ version: 2
 sources:
   - name: cowjacket_raw
     catalog: workspace
-    schema: "{{ var('target_schema')[target.name] }}"
+    schema: dbt_dev
     tables:
       - name: customers
         description: "Raw customer data from SQL module"
-      - name: loyality_points
+      - name: loyalty_points
         description: "Raw loyalty points data from SQL module"
       - name: order_items
         description: "Raw order items data from SQL module"
