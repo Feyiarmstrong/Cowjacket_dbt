@@ -1,0 +1,79 @@
+version: 2
+
+models:
+  - name: int_customer_orders
+    description: Intermediate table joining customers with their orders at line-item level
+    columns:
+      - name: order_id
+        description: Order ID (repeats per product)
+        tests:
+          - not_null
+      - name: customer_id
+        description: Foreign key to staging customers
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: full_name
+        description: Customer full name
+        tests:
+          - not_null
+      - name: email
+        description: Customer email
+        tests:
+          - not_null
+      - name: product_id
+        description: Product ID included in the order
+        tests:
+          - not_null
+      - name: quantity
+        description: Quantity of the product in the order
+        tests:
+          - not_null
+      - name: line_total
+        description: Total amount for this line
+        tests:
+          - not_null
+      - name: order_date
+        description: Date the order was placed
+        tests:
+          - not_null
+
+  - name: int_order_details
+    description: Intermediate table summarizing order line items
+    columns:
+      - name: order_id
+        description: Order ID
+        tests:
+          - not_null
+      - name: product_id
+        description: Product ID
+        tests:
+          - not_null
+      - name: quantity
+        description: Quantity of product in order
+        tests:
+          - not_null
+      - name: line_total
+        description: Total line amount
+        tests:
+          - not_null
+
+  - name: int_loyalty_summary
+    description: Intermediate table summarizing loyalty points per customer
+    columns:
+      - name: customer_id
+        description: Customer ID
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id
+      - name: total_points
+        description: Total loyalty points per customer
+        tests:
+          - not_null
+      - name: last_transaction_date
+        description: Date of last loyalty transaction
+        tests: []

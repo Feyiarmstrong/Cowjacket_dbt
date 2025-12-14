@@ -1,0 +1,16 @@
+customer_id,full_name,email,join_date
+1,Alice Johnson,alice.johnson@example.com,2023-01-15
+2,Brian Smith,brian.smith@example.com,2023-02-20
+3,Chinwe Okafor,chinwe.okafor@example.com,2023-03-05
+4,David Lee,david.lee@example.com,2023-03-18
+5,Emeka Nwosu,emeka.nwosu@example.com,2023-04-12
+6,Fatima Bello,fatima.bello@example.com,2023-05-25
+7,George Adewale,george.adewale@example.com,2023-06-07
+8,Hannah Kim,hannah.kim@example.com,2023-07-14
+9,Ibrahim Musa,ibrahim.musa@example.com,2023-08-22
+10,Jessica White,jessica.white@example.com,2023-09-30
+11,Kemi Adebayo,kemi.adebayo@example.com,2023-10-10
+12,Leo Fernandez,leo.fernandez@example.com,2023-11-05
+13,Mariam Yusuf,mariam.yusuf@example.com,2023-11-20
+14,Nathan Okeke,nathan.okeke@example.com,2023-12-01
+15,Olivia Brown,olivia.brown@example.com,2023-12-15
