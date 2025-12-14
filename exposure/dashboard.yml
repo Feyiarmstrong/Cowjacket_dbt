@@ -1,0 +1,15 @@
+version: 2
+
+exposures:
+  - name: cowjacket_sales_dashboard
+    type: dashboard
+    maturity: medium
+    owner:
+      name: Feyisayo
+      email: solape@company.com
+    depends_on:
+      - ref('fact_orders')
+      - ref('fact_product_sales')
+      - ref('dim_customers')
+    description: >
+      Sales dashboard used by business team to track revenue and orders.
