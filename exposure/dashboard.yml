@@ -6,7 +6,7 @@ exposures:
     maturity: medium
     owner:
       name: Feyisayo
-      email: solape@company.com
+      email: solapeajiboye@company.com
     depends_on:
       - ref('fact_orders')
       - ref('fact_product_sales')
