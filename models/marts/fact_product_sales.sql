@@ -1,3 +1,14 @@
+{{ config(
+    materialized='table',
+    schema='analytics_marts' if target.name == 'production' else target.schema
+) }}
+
+{% if target.name != 'production' and config.get('schema') == 'analytics_marts' %}
+  {{ exceptions.raise_compiler_error("analytics_marts is PROD-ONLY") }}
+{% endif %}
+
+
+
 select
     p.product_id,
     p.product_name,
@@ -10,4 +21,5 @@ join {{ ref('stg_products') }} p
 group by
     p.product_id,
     p.product_name,
+
     p.category
