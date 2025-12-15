@@ -24,9 +24,6 @@ clean-targets:
 # Models configuration
 models:
   my_new_project:
-    # Default schema for all environments
-    +schema: "{{ target.schema }}"
-
     # STAGING layer
     staging:
       +materialized: view
