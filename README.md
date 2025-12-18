@@ -19,7 +19,7 @@ models/
 
 ├── marts/            # Final fact/dimension tables
 
-seeds/                # Optional CSV seed files
+seeds/                # CSV seed files
 
 sources/              # Source table definitions
 
@@ -51,9 +51,9 @@ We use three separate environments:
 
 | Staging     | `dbt_staging`       | Pre-production testing         |
 
-| Production  | `dbt_production` / `analytics_marts` | Final production tables |
+| Production  | `dbt_production`    | Final production tables |
 
-- **Guardrails** ensure that marts models **write to `analytics_marts` only in production**:
+- **Guardrails** ensure that marts models **write to `dbt_production` only in production**:
 
 ```sql
 
@@ -61,14 +61,14 @@ We use three separate environments:
 
     materialized='table',
 
-    schema='analytics_marts' if target.name == 'production' else target.schema
+    schema='dbt_production' if target.name == 'production' else target.schema
 
 ) }}
 
 
-{% if target.name != 'production' and config.get('schema') == 'analytics_marts' %}
+{% if target.name != 'production' and config.get('schema') == 'dbt_production' %}
 
-  {{ exceptions.raise_compiler_error("analytics_marts is PROD-ONLY") }}
+  {{ exceptions.raise_compiler_error("dbt_production is PROD-ONLY") }}
 
 {% endif %}
 
@@ -84,7 +84,7 @@ We use three separate environments:
 
 - **Staging workflow**: After testing, code is run in the staging environment (`dbt_staging`) to validate full pipeline integration.  
 
-- **Production workflow**: Production jobs build marts tables into `analytics_marts`, ensuring dev/staging are untouched.  
+- **Production workflow**: Production jobs build marts tables into `dbt_production`, ensuring dev/staging are untouched.  
 
 
 **Jobs setup in dbt Cloud:**
@@ -127,7 +127,7 @@ dbt run --target default
 
 3. **Run staging job** in dbt Cloud to validate integration.  
 
-4. **Run production job** to build marts tables into `analytics_marts`.  
+4. **Run production job** to build marts tables into `dbt_production`.  
 
 5. **Check tables**:
 
@@ -137,7 +137,7 @@ SHOW TABLES IN dbt_dev;
 
 SHOW TABLES IN dbt_staging;
 
-SHOW TABLES IN analytics_marts;
+SHOW TABLES IN dbt_production;
 
 ```
 
@@ -159,7 +159,7 @@ dbt docs serve
 
 - **Three-layer modeling** ensures modularity and maintainability.  
 
-- **Schema separation** (`dbt_dev`, `dbt_staging`, `analytics_marts`) supports proper CI/CD workflows.  
+- **Schema separation** (`dbt_dev`, `dbt_staging`, `dbt_production`) supports proper CI/CD workflows.  
 
 - **Observability and logging** for each dbt run.  
 
@@ -173,10 +173,10 @@ dbt docs serve
 
 - Production guardrails are enforced through dbt model configs.  
 
-- Schemas must exist in Databricks before running production jobs (`analytics_marts` schema).  
+- Schemas must exist in Databricks before running production jobs (`dbt_production` schema).  
 
 ---
 
 ## Conclusion
 
-This project is a **fully functional dbt pipeline** with development, staging, and production environments, proper schema partitioning, and guardrai
+This project is a **fully functional dbt pipeline** with development, staging, production environments, proper schema partitioning, and guardrails
