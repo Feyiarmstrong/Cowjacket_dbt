@@ -1,10 +1,10 @@
 {{ config(
     materialized='table',
-    schema='dbt_production' if target.name == 'production' else target.schema
+    schema='analytics_marts' if target.name == 'production' else target.schema
 ) }}
 
-{% if target.name != 'production' and config.get('schema') == 'dbt_production' %}
-  {{ exceptions.raise_compiler_error("dbt_production is PROD-ONLY") }}
+{% if target.name != 'production' and config.get('schema') == 'analytics_marts' %}
+  {{ exceptions.raise_compiler_error("analytics_marts is PROD-ONLY") }}
 {% endif %}
 
 
@@ -19,4 +19,5 @@ from {{ ref('stg_customers') }} c
 left join {{ ref('int_loyalty_summary') }} l
 
     on c.customer_id = l.customer_id
+
 
